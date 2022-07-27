@@ -1,0 +1,59 @@
+ <style>
+  .logoImg{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 6px;
+  }
+ </style>
+ 
+ <!-- navbar area starts -->
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  {% comment %} <i class="bi bi-images mr-3 text-light"></i> {% endcomment %}
+  <img class="logoImg" src="media/images/PhotoGallery_icon.png" alt="">
+
+    <a class="navbar-brand" href="{% url 'gallery' %}">PhotoGallery</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'gallery' %}">Home</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'add_photo' %}">Add Photo</a>
+        </li>
+        {% if user.is_authenticated%}
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+        </li>
+        {%else%}
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'login' %}">Login</a>
+        </li>
+        {% endif %}
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input
+          class="form-control mr-sm-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+          Search
+        </button>
+      </form>
+    </div>
+  </nav>
+  <!-- navbar area ends -->

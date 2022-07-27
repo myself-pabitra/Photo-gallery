@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% include 'navbar.html' %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/galary.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fontawesome CDN Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+   </head>
+   
+<body>
+
+                                <!-- Category Filter Section  -->
+
+  <div class="btn-group mt-2 ml-2">
+    <div id="btn-all" onclick="catagoryCliecked('all')" class="btn btn-transparent">All</div>
+
+    {% for catagory in catagories %}
+    <div onclick="catagoryCliecked({{catagory.id}})" id="btn-{{catagory.id}}" class="btn btn-transparent">{{catagory.name}}</div>
+    {% endfor %}
+  </div>
+
+  <form action="" method="post" id="category-search-form" class="">
+    {% csrf_token %}
+    <input type="text" name="catagory" id="catagory-input" hidden>
+  </form>
+
+                                <!-- Category Filter Section ends here -->
+
+  <section>
+    <div class="lightBox">
+      <div class="lightBox_content">
+        <!-- {% comment %} <i class="fas fa-times close"></i> {% endcomment %} -->
+        <i class="fa-solid fa-xmark close"></i>
+
+        <div class="logo_icons">
+          <a href="#" class="anchor">
+            <img class="logoImg" src="media/images/PhotoGallery_icon.png" alt="">
+            <div class="text_content">
+              <span class="name">PhotoGallery</span>
+              <!-- <span class="followers">50k followers</span> -->
+            </div>
+          </a>
+          <div class="icons">
+            <i class="fas fa-heart"></i>
+
+            <!-- <i class="fas fa-arrow-down"></i> -->
+            <a href="{{photo.image.url}} "download id ="lightBox_download"><i class="fas fa-arrow-down" ></i></a>
+          </div>
+        </div>
+
+        <div class="showImg">
+          <div class="image">
+            <img src="" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+
+            {% comment %} ------------------------------------------------------------ {% endcomment %}
+    <div class="image-gallery">
+      <div class="image-container">
+        {% for photo in photos%}
+        <div class="image-box">
+          <img class="gImg" src="{{mediaurl}}{{photo.image}}" alt="{{photo.description}}">
+         
+          <div class="logo_icons">
+            <a href="#" class="anchor">
+              <img class="logoImg" src="media/images/PhotoGallery_icon.png" alt="">
+
+              <div class="text_content">
+                <span class="name">PhotoGallery</span>
+              </div>
+            </a> 
+            <div class="icons">
+              <i class="fas fa-heart"></i>
+              <a href="{{photo.image.url}} "download><i class="fas fa-arrow-down" ></i></a>
+              <!-- <i class="fas fa-arrow-down" ></i> -->
+
+            </div>
+          </div>
+        </div>
+        {%empty%}
+        <h3 class="text-danger">No photos to shown </h3>
+        
+        {% endfor %}
+
+      </div>
+    </div>
+  </section>
+
+  <script>
+
+    let body = document.querySelector("body"),
+    lightBox = document.querySelector(".lightBox"),
+    img = document.querySelectorAll(".gImg"),
+    showImg = lightBox.querySelector(".showImg img"),
+    downImg = lightBox.querySelector("#lightBox_download"),
+
+    close = lightBox .querySelector(".close");
+
+   for (let image of img) {
+     image.addEventListener("click", ()=>{
+       showImg.src = image.src;
+       downImg.href = image.src;
+
+       lightBox.style.display = "block";
+       body.style.overflow = "hidden";
+       close.onclick = ()=>{
+         lightBox.style.display = "none";
+         body.style.overflow = "visible";
+       };
+     });
+   }
+
+   function catagoryCliecked(id){
+    id = 'btn-'+ id;
+    btnName = document.getElementById(id).innerText;
+    formInput = document.getElementById('catagory-input')
+    formInput.value = btnName
+    form = document.getElementById('category-search-form')
+    form.submit()
+   }
+
+  
+
+  </script>
+
+</body>
+</html>
+
+{% endblock content %}

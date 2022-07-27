@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+<title>{% block title %}view Image{% endblock title %}</title>
+
+{% block content %}
+{% include 'navbar.html' %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col">
+            <a href="{% url 'gallery' %}" class="btn btn-dark mt-4">Go back</a>
+
+            <div style="height: 90vh;">
+                <img   style="max-width: 100%; max-height:100%;"  src="{{photos.image.url}}" alt="">
+                <p>{{photos.description}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
